@@ -35,7 +35,6 @@
             display: flex; flex-direction: column; align-items: center;
             margin: 0; padding: 30px 20px;
             transition: background 0.8s ease;
-            overflow-x: hidden;
         }
 
         h1 { font-size: 2.5rem; color: var(--title); margin: 20px 0; font-weight: 800; text-align: center; }
@@ -57,8 +56,7 @@
             aspect-ratio: 1/1; background: var(--card); border: none;
             border-radius: 40px; box-shadow: 0 10px 30px rgba(214, 51, 132, 0.15);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s ease;
-            position: relative;
+            cursor: pointer; transition: transform 0.1s ease;
         }
         .sound-btn:active { transform: scale(0.9); }
         .emoji { font-size: 4rem; margin-bottom: 10px; pointer-events: none; }
@@ -69,16 +67,6 @@
         .submit-btn { background: var(--accent); color: white; border: none; padding: 18px 35px; border-radius: 50px; font-weight: bold; font-size: 1.2rem; cursor: pointer; }
 
         .footer { margin-top: 60px; font-size: 1.4rem; color: var(--title); font-weight: 900; text-align: center; padding-bottom: 50px; }
-
-        /* Animation de la fonctionnalité surprise */
-        .surprise-particle {
-            position: fixed; pointer-events: none; z-index: 999;
-            font-size: 1.5rem; animation: fly 1.5s ease-out forwards;
-        }
-        @keyframes fly {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-150px) translateX(var(--side)) scale(0); opacity: 0; }
-        }
     </style>
 </head>
 <body id="mainBody">
@@ -90,15 +78,16 @@
     </div>
 
     <div class="grid">
-        <button class="sound-btn" onclick="triggerAction(this, 'matin.m4a')">
+        <button class="sound-btn" onclick="playAudio('matin.m4a')">
             <span class="emoji">☀️</span><span class="label">Bonjour</span>
         </button>
-        <button class="sound-btn" onclick="triggerAction(this, 'blague.m4a')">
+        <button class="sound-btn" onclick="playAudio('blague.m4a')">
             <span class="emoji">😂</span><span class="label">Blague</span>
         </button>
-        <button class="sound-btn" onclick="play('souvenir.m4a')"> <span class="emoji">💭</span><span class="label">Souvenir</span>
+        <button class="sound-btn" onclick="playAudio('souvenir.m4a')">
+            <span class="emoji">💭</span><span class="label">Souvenir</span>
         </button>
-        <button class="sound-btn" onclick="triggerAction(this, 'calin.m4a')">
+        <button class="sound-btn" onclick="playAudio('calin.m4a')">
             <span class="emoji">🧸</span><span class="label">Bisou</span>
         </button>
     </div>
@@ -116,27 +105,19 @@
 
     <script>
         let currentAudio = null;
-        function play(file) {
-            if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+
+        function playAudio(file) {
+            // Arrête le son en cours s'il y en a un
+            if (currentAudio) { 
+                currentAudio.pause(); 
+                currentAudio.currentTime = 0; 
+            }
+            // Lance le nouveau son
             currentAudio = new Audio(file);
-            currentAudio.play();
-        }
-
-        function triggerAction(btn, file) {
-            play(file);
-            const rect = btn.getBoundingClientRect();
-            for(let i=0; i<8; i++) { createParticle(rect.left + rect.width/2, rect.top); }
-        }
-
-        function createParticle(x, y) {
-            const p = document.createElement('div');
-            p.className = 'surprise-particle';
-            p.style.left = x + 'px';
-            p.style.top = y + 'px';
-            p.style.setProperty('--side', (Math.random() * 120 - 60) + 'px');
-            p.innerHTML = ['❤️', '💖', '✨', '🌸', '🎁'][Math.floor(Math.random() * 5)];
-            document.body.appendChild(p);
-            setTimeout(() => p.remove(), 1500);
+            currentAudio.play().catch(e => {
+                console.error("Erreur lecture :", file, e);
+                alert("Erreur : Le fichier " + file + " est introuvable ou illisible.");
+            });
         }
 
         function checkTime() {
@@ -147,4 +128,5 @@
         checkTime();
     </script>
 </body>
+</html>
 </html>
