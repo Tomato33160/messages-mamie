@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Messages pour Mamie</title>
+    <title>Messages pour Mamie ❤️</title>
     
     <link rel="apple-touch-icon" href="icone.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -17,7 +17,7 @@
             --accent: #ff8fa3;
             --title: #d63384;
             --promise-bg: #ffeef2;
-            --notification: #ff3b30; /* Rouge notification iOS */
+            --notification: #ff3b30;
         }
 
         body.dark-mode {
@@ -36,59 +36,77 @@
             display: flex; flex-direction: column; align-items: center;
             margin: 0; padding: 30px 20px;
             transition: background 0.8s ease;
+            min-height: 100vh;
         }
 
-        h1 { font-size: 2.5rem; color: var(--title); margin: 20px 0; font-weight: 800; text-align: center; }
+        h1 { font-size: 2.2rem; color: var(--title); margin: 10px 0; font-weight: 800; text-align: center; }
 
         .promise {
-            font-size: 1.1rem; color: #884d6d; background: var(--promise-bg);
-            padding: 20px; border-radius: 20px; margin-bottom: 40px;
+            font-size: 1rem; color: #884d6d; background: var(--promise-bg);
+            padding: 15px; border-radius: 20px; margin-bottom: 30px;
             text-align: center; max-width: 450px; border: 2px dashed var(--accent);
-            line-height: 1.5;
         }
         body.dark-mode .promise { color: #eee; }
 
         .grid {
             display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: 25px; width: 100%; max-width: 450px;
+            gap: 20px; width: 100%; max-width: 450px;
         }
 
-        /* Conteneur pour le bouton et son badge */
-        .btn-wrapper {
-            position: relative;
-            width: 100%;
-        }
+        .btn-wrapper { position: relative; width: 100%; }
 
         .sound-btn {
             width: 100%; aspect-ratio: 1/1; background: var(--card); border: none;
-            border-radius: 40px; box-shadow: 0 10px 30px rgba(214, 51, 132, 0.15);
+            border-radius: 35px; box-shadow: 0 10px 25px rgba(214, 51, 132, 0.1);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             cursor: pointer; transition: transform 0.1s ease;
         }
-        .sound-btn:active { transform: scale(0.9); }
+        .sound-btn:active { transform: scale(0.92); }
 
-        /* Le petit point rouge */
         .badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 18px;
-            height: 18px;
-            background-color: var(--notification);
-            border-radius: 50%;
-            border: 3px solid var(--card);
-            display: none; /* Caché par défaut, activé par le JS */
-            z-index: 10;
+            position: absolute; top: 12px; right: 12px;
+            width: 15px; height: 15px; background: var(--notification);
+            border-radius: 50%; border: 3px solid var(--card);
+            display: none; z-index: 10;
         }
 
-        .emoji { font-size: 4rem; margin-bottom: 10px; pointer-events: none; }
-        .label { font-size: 1.2rem; font-weight: 700; color: #555; pointer-events: none; }
+        .emoji { font-size: 3.5rem; margin-bottom: 5px; }
+        .label { font-size: 1.1rem; font-weight: 700; color: #555; }
         body.dark-mode .label { color: #eee; }
 
-        .love-card { background: var(--card); padding: 30px; border-radius: 35px; margin-top: 50px; text-align: center; width: 100%; max-width: 400px; border: 2px solid #ffeef2; }
-        .submit-btn { background: var(--accent); color: white; border: none; padding: 18px 35px; border-radius: 50px; font-weight: bold; font-size: 1.2rem; cursor: pointer; }
+        .submit-btn { 
+            background: var(--accent); color: white; border: none; 
+            padding: 18px 30px; border-radius: 50px; font-weight: bold; 
+            font-size: 1.1rem; cursor: pointer; margin-top: 30px;
+        }
 
-        .footer { margin-top: 60px; font-size: 1.4rem; color: var(--title); font-weight: 900; text-align: center; padding-bottom: 50px; }
+        /* --- SYSTÈME MOSAÏQUE --- */
+        #help-btn {
+            position: fixed; bottom: 25px; right: 25px;
+            width: 60px; height: 60px; background: var(--accent);
+            color: white; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: 900; cursor: pointer;
+            box-shadow: 0 5px 20px rgba(214, 51, 132, 0.4); z-index: 100;
+        }
+
+        #mosaique-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); display: none;
+            align-items: center; justify-content: center; z-index: 200;
+        }
+
+        #mosaique-overlay img {
+            max-width: 90%; max-height: 85%;
+            border-radius: 12px; border: 2px solid #fff;
+        }
+
+        .close-icon {
+            position: absolute; top: 30px; right: 30px;
+            color: white; font-size: 3rem; font-weight: bold; cursor: pointer;
+        }
+
+        .footer { margin-top: 40px; font-size: 1.2rem; color: var(--title); font-weight: 800; opacity: 0.8; }
     </style>
 </head>
 <body id="mainBody">
@@ -96,7 +114,7 @@
     <h1>Coucou Mamie ! ❤️</h1>
     
     <div class="promise">
-        Quatre nouveaux messages seront ajoutés chaque semaine à l'app, regarde les petits points rouges pour ne rien rater ! ❤️
+        De nouveaux messages chaque semaine ! Regarde les points rouges pour ne rien rater. ❤️
     </div>
 
     <div class="grid">
@@ -105,35 +123,37 @@
                 <span class="emoji">☀️</span><span class="label">Bonjour</span>
             </button>
         </div>
-
         <div class="btn-wrapper">
-            <div class="badge"></div> <button class="sound-btn" onclick="boostedPlay('blague.m4a')">
+            <div class="badge"></div>
+            <button class="sound-btn" onclick="boostedPlay('blague.m4a')">
                 <span class="emoji">😂</span><span class="label">Blague</span>
             </button>
         </div>
-
         <div class="btn-wrapper">
-            <div class="badge"></div> <button class="sound-btn" onclick="boostedPlay('souvenir.m4a')">
+            <div class="badge"></div>
+            <button class="sound-btn" onclick="boostedPlay('souvenir.m4a')">
                 <span class="emoji">💭</span><span class="label">Souvenir</span>
             </button>
         </div>
-
         <div class="btn-wrapper">
-            <div class="badge"></div> <button class="sound-btn" onclick="boostedPlay('calin.m4a')">
+            <div class="badge"></div>
+            <button class="sound-btn" onclick="boostedPlay('calin.m4a')">
                 <span class="emoji">🧸</span><span class="label">Bisou</span>
             </button>
         </div>
     </div>
 
-    <div class="love-card">
-        <form action="https://formspree.io/f/maqdkzpw" method="POST">
-            <input type="hidden" name="_subject" value="Message de Mamie !">
-            <button type="submit" class="submit-btn">Oui, j'ai tout écouté ! ❤️</button>
-        </form>
-    </div>
+    <form action="https://formspree.io/f/maqdkzpw" method="POST">
+        <button type="submit" class="submit-btn">J'ai tout écouté ! ❤️</button>
+    </form>
 
-    <div class="footer">
-        Fait avec 💖 par ton petit-fils Tom
+    <div class="footer">Fait par ton petit-fils Tom</div>
+
+    <div id="help-btn" onclick="toggleM(true)">?</div>
+
+    <div id="mosaique-overlay" onclick="toggleM(false)">
+        <div class="close-icon">×</div>
+        <img src="mosaique.png" alt="Mosaïque">
     </div>
 
     <script>
@@ -141,57 +161,41 @@
         let currentSource = null;
 
         function boostedPlay(file) {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            if (currentSource) { 
-                try { currentSource.stop(); } catch(e) {}
-            }
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (currentSource) { try { currentSource.stop(); } catch(e) {} }
 
             fetch(file)
-                .then(response => response.arrayBuffer())
-                .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
-                .then(audioBuffer => {
-                    const source = audioCtx.createBufferSource();
-                    const gainNode = audioCtx.createGain();
-                    gainNode.gain.value = 3; 
-                    source.buffer = audioBuffer;
-                    source.connect(gainNode);
-                    gainNode.connect(audioCtx.destination);
-                    source.start();
-                    currentSource = source;
-                })
-                .catch(e => {
-                    let simpleAudio = new Audio(file);
-                    simpleAudio.play();
-                });
+                .then(r => r.arrayBuffer())
+                .then(buf => audioCtx.decodeAudioData(buf))
+                .then(data => {
+                    const src = audioCtx.createBufferSource();
+                    const gain = audioCtx.createGain();
+                    gain.gain.value = 2.5; 
+                    src.buffer = data;
+                    src.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    src.start();
+                    currentSource = src;
+                }).catch(() => new Audio(file).play());
         }
 
-        // --- GESTION DES POINTS ROUGES ---
-        function updateBadges() {
-            // METS ICI LA DATE DE TA MISE À JOUR (Année, Mois-1, Jour, Heure, Minute)
-            // Attention : le mois commence à 0 (Janvier = 0, Mars = 2)
-            const dateSortie = new Date(2026, 2, 4, 12, 0); 
-            
-            const maintenant = new Date();
-            const uneJourneeEnMs = 24 * 60 * 60 * 1000;
+        function toggleM(show) {
+            document.getElementById('mosaique-overlay').style.display = show ? 'flex' : 'none';
+        }
 
-            // Si on est encore dans les 24h après la sortie
-            if (maintenant - dateSortie < uneJourneeEnMs && maintenant > dateSortie) {
-                document.querySelectorAll('.badge').forEach(badge => {
-                    badge.style.display = 'block';
-                });
-            } else {
-                document.querySelectorAll('.badge').forEach(badge => {
-                    badge.style.display = 'none';
-                });
+        function updateBadges() {
+            // Date de mise à jour : 14 Mars 2026
+            const release = new Date(2026, 2, 14, 12, 0); 
+            const now = new Date();
+            if (now - release < 24 * 60 * 60 * 1000 && now > release) {
+                document.querySelectorAll('.badge').forEach(b => b.style.display = 'block');
             }
         }
 
         function checkTime() {
-            const hour = new Date().getHours();
-            if (hour < 8 || hour >= 20) { document.getElementById('mainBody').classList.add('dark-mode'); }
-            else { document.getElementById('mainBody').classList.remove('dark-mode'); }
+            const h = new Date().getHours();
+            if (h < 8 || h >= 20) document.body.classList.add('dark-mode');
         }
 
         checkTime();
